@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   generate:
@@ -68,7 +68,7 @@ jobs:
         run: ls
       - name: Generate new agenda
         run: |
-          poetry run python ./aus_council_scrapers/main.py --council melbourne
+          poetry run python ./aus_council_scrapers/main.py
       - name: Upload new agenda to artefact repo
         uses: actions/upload-artifact@v4
         with:
