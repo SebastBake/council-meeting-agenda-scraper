@@ -49,9 +49,9 @@ jobs:
       - name: Get latest successful run ID
         run: |
           current_branch=$(git branch --show-current)
-          echo current_branch=$current_branch
+          echo "current_branch=$current_branch" >> $GITHUB_ENV
           latest_run_id=$(gh run list --workflow='${{ github.workflow }}' --branch=$current_branch --json databaseId --jq '.[0].databaseId')
-          echo latest_run_id=$latest_run_id
+          echo "latest_run_id=$latest_run_id" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download previous agenda from artefact repo
