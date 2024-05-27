@@ -47,15 +47,14 @@ jobs:
           python -m pip install poetry==1.8.3 
           poetry install --with dev
           poetry update
-      - name: Download artefact
+      - name: Download previous agenda from artefact repo
         uses: actions/download-artifact@v4
         continue-on-error: true
         with:
           name: agendas.db
           path: ./agendas.db
-      - name: Download previous agenda from artefact repo
-        run: |
-          echo "Downloading previous agenda from artefact repo (SKIPPED)"
+      - name: Display file structure
+        run: ls -R
       - name: Generate new agenda
         run: |
           poetry run python ./aus_council_scrapers/main.py --council melbourne
