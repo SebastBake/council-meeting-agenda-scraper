@@ -47,11 +47,12 @@ jobs:
           python -m pip install poetry==1.8.3 
           poetry install --with dev
       - name: Get latest successful run ID
+        id: get_latest_run_id
         run: |
-          current_branch=$(git branch --show-current)
-          echo "current_branch=$current_branch" >> $GITHUB_ENV
-          latest_run_id=$(gh run list --workflow='${{ github.workflow }}' --branch=$current_branch --json databaseId --jq '.[0].databaseId')
-          echo "latest_run_id=$latest_run_id" >> $GITHUB_ENV
+          CURRENT_BRANCH=$(git branch --show-current)
+          echo "CURRENT_BRANCH=$CURRENT_BRANCH" >> $GITHUB_ENV
+          LATEST_RUN_ID=$(gh run list --workflow='${{ github.workflow }}' --branch=$CURRENT_BRANCH --json databaseId --jq '.[0].databaseId')
+          echo "LATEST_RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Download previous agenda from artefact repo
@@ -60,7 +61,8 @@ jobs:
         with:
           name: agendas.db
           path: ./agendas.db
-          run-id: ${{ env.latest_run_id }}
+          run-id: ${{ steps.get_latest_run_id.outputs.LATEST_RUN_ID }}
+
       - name: Display file structure
         run: ls
       - name: Generate new agenda
