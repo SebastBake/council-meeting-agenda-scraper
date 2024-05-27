@@ -51,7 +51,7 @@ jobs:
         run: |
           CURRENT_BRANCH=$(git branch --show-current)
           echo "CURRENT_BRANCH=$CURRENT_BRANCH" >> $GITHUB_ENV
-          LATEST_RUN_ID=$(gh run list --workflow='${{ github.workflow }}' --branch=$CURRENT_BRANCH --json databaseId --jq '[.[] | select(.status == "completed")][0].databaseId')
+          LATEST_RUN_ID=$(gh run list --workflow='${{ github.workflow }}' --branch=$CURRENT_BRANCH --json databaseId,status --jq '[.[] | select(.status == "completed")][0].databaseId')
           echo "LATEST_RUN_ID=$LATEST_RUN_ID" >> $GITHUB_ENV
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
