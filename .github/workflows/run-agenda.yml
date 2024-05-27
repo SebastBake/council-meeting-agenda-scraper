@@ -5,7 +5,7 @@ name: Generate Agenda Database
 
 on:
   push:
-    branches: ["test-actions"] # FIXME: replace with 'main'
+    branches: ["main"]
   schedule:
     - cron: "*/30 * * * *"
   workflow_dispatch:
