@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 jobs:
-  build:
+  generate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -39,8 +39,7 @@ jobs:
           echo "Downloading previous agenda from artefact repo (SKIPPED)"
       - name: Generate new agenda
         run: |
-          poetry shell
-          python ./aus_council_scrapers/main.py --council melbourne
+          poetry run python ./aus_council_scrapers/main.py --council melbourne
       - name: Upload new agenda to artefact repo
         run: |
           echo "Uploading new agenda to artefact repo (SKIPPED)"
