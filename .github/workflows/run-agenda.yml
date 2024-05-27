@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   generate:
@@ -48,8 +48,8 @@ jobs:
           poetry install --with dev
       - name: Get latest successful run ID
         run: |
-          echo "gh run list --workflow=${{ github.workflow }} --branch=${{ github.head_ref }} --json databaseId --jq '.[0].databaseId'"
-          latest_run_id=$(gh run list --workflow=${{ github.workflow }} --branch=${{ github.head_ref }} --json databaseId --jq '.[0].databaseId')
+          current_branch=$(git branch --show-current)
+          latest_run_id=$(gh run list --workflow=${{ github.workflow }} --branch=$current_branch --json databaseId --jq '.[0].databaseId')
           echo "latest_run_id=$latest_run_id" >> $GITHUB_ENV
       - name: Download previous agenda from artefact repo
         uses: actions/download-artifact@v4
