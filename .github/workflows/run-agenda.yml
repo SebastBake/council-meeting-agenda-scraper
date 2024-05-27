@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Get latest successful run ID
+      - name: Get latest successful run id
         id: get_latest_run_id
         run: |
           CURRENT_BRANCH=$(git branch --show-current)
